@@ -1,7 +1,22 @@
-start
-<input type="number" [(ngModel)]="ledStart">
-end
-<input type="number" [(ngModel)]="ledEnd">
-<input [(colorPicker)]="color" [style.background]="color" [cpOutputFormat]="'rgba'" [cpAlphaChannel]="'disabled'"/>
+Name:
+<input required type="text" [(ngModel)]="name" id="name">
+<div *ngIf="nameInvalid" class="required">
+    Enter a name
+</div>
+<br>
+<div *ngFor="let color of colors2; index as i">
+    {{color}}
+    {{i}}
+    {{chunks[i+1]}}
+    Start:
+    <input type="number" [(ngModel)]="chunks[i*2]">
+    <br>
+    End:
+    <input type="number" [(ngModel)]="chunks[i*2+1]">
+    <br>
+    <!-- <input [(colorPicker)]="colors[i]" [style.background]="colors[i]" [cpOutputFormat]="'rgba'"
+        [cpAlphaChannel]="'disabled'" /> -->
+        <input type="color" [(ngModel)]="colors2[i]">
+    <br>
+</div>
 <button (click)="setColor()">Submit</button>
-<canvas></canvas>
