@@ -11,7 +11,7 @@ export class LedUpdateRequest {
 export class BulkLEDUpdate {
     public status: LEDUpdate[];
 
-    constructor(status = []) {
+    constructor(status: LEDUpdate[]) {
         this.status = status;
     }
 }

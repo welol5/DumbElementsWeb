@@ -4,19 +4,18 @@ Name:
     Enter a name
 </div>
 <br>
-<div *ngFor="let color of colors2; index as i">
-    {{color}}
-    {{i}}
-    {{chunks[i+1]}}
-    Start:
-    <input type="number" [(ngModel)]="chunks[i*2]">
-    <br>
-    End:
-    <input type="number" [(ngModel)]="chunks[i*2+1]">
-    <br>
-    <!-- <input [(colorPicker)]="colors[i]" [style.background]="colors[i]" [cpOutputFormat]="'rgba'"
-        [cpAlphaChannel]="'disabled'" /> -->
-        <input type="color" [(ngModel)]="colors2[i]">
-    <br>
+
+<div class="ledContainer">
+    <div *ngFor="let led of leds; index as i" (click)="select(i)">
+        <div class="led" [ngStyle]="ledStyles[i]">{{i}}</div>
+        <!-- <div *ngIf="!ledsSelected[i]" class="led ledNotSelected">{{i}}</div> -->
+    </div>
 </div>
+New color selector:
+<input type="color" [(ngModel)]="currentColor" (change)="updateColors()">
+<br>
 <button (click)="setColor()">Submit</button>
+<br>
+<div *ngFor="let action of actionList; index as i">
+    Start: {{action.ledStart}}, End: {{action.ledEnd}}, r: {{action.r}}, g: {{action.g}}, b: {{action.b}}
+</div>

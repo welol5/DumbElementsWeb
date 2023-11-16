@@ -1,3 +1,25 @@
 .required {
     color: red;
 }
+
+.led {
+    width: 2em;
+    height: 2em;
+    border-radius: .25em;
+    margin: 1px;
+}
+
+.ledContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ledSelected {
+    border: 3px solid rgb(0, 255, 0);
+    padding: 0px;
+}
+
+.ledNotSelected {
+    border: 1px solid black;
+    padding: 2px;
+}
