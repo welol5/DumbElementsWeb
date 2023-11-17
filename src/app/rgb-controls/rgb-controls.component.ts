@@ -54,15 +54,10 @@ export class RgbControlsComponent {
   select(i: number): void {
     if (this.selection == -1) {
       this.selection = i;
+      this.selectionStart = -1;
+      this.selectionEnd = -1;
       this.currentColor = '#FFFFFF';
-      for (let k = 0; k < this.rgb.getLEDCount(); k++) {
-        this.ledStyles[k] = {
-          'color': this.getTextColor(this.leds[k]),
-          'background-color': this.leds[k],
-          'border': '1px solid #000000',
-          'padding': '2px'
-        }
-      }
+      this.resetSelection();
       this.ledStyles[i] = {
         'color': this.getTextColor(this.leds[i]),
         'background-color': this.leds[i],
@@ -79,14 +74,7 @@ export class RgbControlsComponent {
       }
       this.selection = -1;
 
-      for (let k = 0; k < this.rgb.getLEDCount(); k++) {
-        this.ledStyles[k] = {
-          'color': this.getTextColor(this.leds[k]),
-          'background-color': this.leds[k],
-          'border': '1px solid #000000',
-          'padding': '2px'
-        }
-      }
+      this.resetSelection();
 
       for (let k = this.selectionStart; k <= this.selectionEnd; k++) {
         this.ledStyles[k] = {
@@ -100,7 +88,25 @@ export class RgbControlsComponent {
     }
   }
 
+  private resetSelection(): void{
+    for (let k = 0; k < this.rgb.getLEDCount(); k++) {
+      this.ledStyles[k] = {
+        'color': this.getTextColor(this.leds[k]),
+        'background-color': this.leds[k],
+        'border': '1px solid #000000',
+        'padding': '2px'
+      }
+    }
+  }
+
   updateColors() {
+
+    if(this.selectionStart == -1){
+      this.selectionStart = this.selection;
+      this.selectionEnd = this.selection;
+      this.selection = -1;
+    }
+
     for (let i = this.selectionStart; i <= this.selectionEnd; i++) {
       this.ledStyles[i] = this.ledStyles[i] = {
         'color': this.getTextColor(this.currentColor),
