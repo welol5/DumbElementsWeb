@@ -17,5 +17,5 @@ New color selector:
 <button (click)="setColor()">Submit</button>
 <br>
 <div *ngFor="let action of actionList; index as i">
-    Start: {{action.ledStart}}, End: {{action.ledEnd}}, r: {{action.r}}, g: {{action.g}}, b: {{action.b}}
+    Start: {{action.ledStart}}, End: {{action.ledEnd}}, r: {{action.r}}, g: {{action.g}}, b: {{action.b}}<button (click)="removeAction(i)">Remove</button>
 </div>

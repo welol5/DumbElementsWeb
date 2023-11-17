@@ -18,16 +18,14 @@ export class RgbControlsComponent {
   public selection: number = -1;
   public selectionStart: number = -1;
   public selectionEnd: number = -1;
-  public ledsSelected: boolean[];
   public ledStyles: any[];
   public currentColor: string;
 
   public actionList: LEDUpdate[] = [];
-  public actionListMaxSize = 10;
+  public actionListMaxSize = 20;
 
   constructor(private rgb: RgbConrollerService) {
     this.leds = Array<string>(rgb.getLEDCount());
-    this.ledsSelected = Array<boolean>(rgb.getLEDCount());
     this.ledStyles = Array<string>(rgb.getLEDCount());
     for (let i = 0; i < rgb.getLEDCount(); i++) {
       this.leds[i] = '#000000';
@@ -56,8 +54,21 @@ export class RgbControlsComponent {
   select(i: number): void {
     if (this.selection == -1) {
       this.selection = i;
-      this.saveColors();
       this.currentColor = '#FFFFFF';
+      for (let k = 0; k < this.rgb.getLEDCount(); k++) {
+        this.ledStyles[k] = {
+          'color': this.getTextColor(this.leds[k]),
+          'background-color': this.leds[k],
+          'border': '1px solid #000000',
+          'padding': '2px'
+        }
+      }
+      this.ledStyles[i] = {
+        'color': this.getTextColor(this.leds[i]),
+        'background-color': this.leds[i],
+        'border': '3px solid #00FF00',
+        'padding': '0px'
+      }
     } else {
       if (i > this.selection) {
         this.selectionStart = this.selection;
@@ -68,19 +79,19 @@ export class RgbControlsComponent {
       }
       this.selection = -1;
 
-      for (let i = 0; i < this.rgb.getLEDCount(); i++) {
-        this.ledsSelected[i] = false;
-        this.ledStyles[i] = this.ledStyles[i] = {
-          'color': this.getTextColor(this.leds[i]),
-          'background-color': this.leds[i],
+      for (let k = 0; k < this.rgb.getLEDCount(); k++) {
+        this.ledStyles[k] = {
+          'color': this.getTextColor(this.leds[k]),
+          'background-color': this.leds[k],
           'border': '1px solid #000000',
           'padding': '2px'
         }
       }
 
-      for (let i = this.selectionStart; i <= this.selectionEnd; i++) {
-        this.ledsSelected[i] = true;
-        this.ledStyles[i] = this.ledStyles[i] = {
+      for (let k = this.selectionStart; k <= this.selectionEnd; k++) {
+        this.ledStyles[k] = {
+          'color': this.getTextColor(this.leds[k]),
+          'background-color': this.leds[k],
           'border': '3px solid #00FF00',
           'padding': '0px'
         }
@@ -98,6 +109,8 @@ export class RgbControlsComponent {
         'padding': '0px'
       }
     }
+
+    this.saveColors();
 
     let r = parseInt(this.currentColor.substring(1, 3), 16);
     let g = parseInt(this.currentColor.substring(3, 5), 16);
@@ -119,6 +132,10 @@ export class RgbControlsComponent {
     for (let i = this.selectionStart; i <= this.selectionEnd; i++) {
       this.leds[i] = '' + this.currentColor;
     }
+  }
+
+  removeAction(index : number): void {
+    this.actionList.splice(index, 1);
   }
 
   /**
