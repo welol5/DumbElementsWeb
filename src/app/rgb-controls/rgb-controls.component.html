@@ -5,9 +5,12 @@ Name:
 </div>
 <br>
 
+<p>
+    Click box to select an LED, use shift + click on a second to select a group.
+</p>
 <div class="ledContainer">
-    <div *ngFor="let led of leds; index as i" (click)="select(i)">
-        <div class="led" [ngStyle]="ledStyles[i]">{{i}}</div>
+    <div *ngFor="let led of leds; index as i" (click)="select(i, $event)">
+        <div class="led noSelect" [ngStyle]="ledStyles[i]">{{i}}</div>
         <!-- <div *ngIf="!ledsSelected[i]" class="led ledNotSelected">{{i}}</div> -->
     </div>
 </div>
@@ -16,6 +19,10 @@ New color selector:
 <br>
 <button (click)="setColor()">Submit</button>
 <br>
+
+<p>
+    This is the list of commands that will be sent and has a maximum of 20 commands. This limit is for the microcontroller to not get overwhelmed. They will be executed from 1st to last. 
+</p>
 <div *ngFor="let action of actionList; index as i">
-    Start: {{action.ledStart}}, End: {{action.ledEnd}}, r: {{action.r}}, g: {{action.g}}, b: {{action.b}}<button (click)="removeAction(i)">Remove</button>
+    {{i+1}}. Start: {{action.ledStart}}, End: {{action.ledEnd}}, r: {{action.r}}, g: {{action.g}}, b: {{action.b}}<button (click)="removeAction(i)">Remove</button>
 </div>

@@ -51,8 +51,8 @@ export class RgbControlsComponent {
     });
   }
 
-  select(i: number): void {
-    if (this.selection == -1) {
+  select(i: number, event: MouseEvent): void {
+    if (this.selection == -1 || !event.shiftKey) {
       this.selection = i;
       this.selectionStart = -1;
       this.selectionEnd = -1;
@@ -64,7 +64,7 @@ export class RgbControlsComponent {
         'border': '3px solid #00FF00',
         'padding': '0px'
       }
-    } else {
+    } else if(event.shiftKey){
       if (i > this.selection) {
         this.selectionStart = this.selection;
         this.selectionEnd = i;
