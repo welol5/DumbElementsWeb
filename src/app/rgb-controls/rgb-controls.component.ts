@@ -18,6 +18,7 @@ export class RgbControlsComponent {
   public selection: number = -1;
   public selectionStart: number = -1;
   public selectionEnd: number = -1;
+  public selectionGroup: number[] = [];
   public ledStyles: any[];
   public currentColor: string;
 
@@ -56,6 +57,8 @@ export class RgbControlsComponent {
       this.selection = i;
       this.selectionStart = -1;
       this.selectionEnd = -1;
+      this.selectionGroup = [];
+      this.selectionGroup.push(i);
       this.currentColor = '#FFFFFF';
       this.resetSelection();
       this.ledStyles[i] = {
@@ -73,7 +76,6 @@ export class RgbControlsComponent {
         this.selectionEnd = this.selection;
       }
       this.selection = -1;
-
       this.resetSelection();
 
       for (let k = this.selectionStart; k <= this.selectionEnd; k++) {
@@ -84,7 +86,8 @@ export class RgbControlsComponent {
           'padding': '0px'
         }
       }
-
+    } else if(event.ctrlKey) {
+      this.selectionGroup.push(i);
     }
   }
 

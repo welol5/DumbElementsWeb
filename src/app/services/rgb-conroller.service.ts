@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConstantsService } from './constants.service';
 import { BulkLEDUpdate } from '../models/ledUpdateRequest';
+import { environment } from 'src/environment/enviornment';
 
 @Injectable({
   providedIn: 'root'
@@ -21,18 +22,14 @@ export class RgbConrollerService {
       name: name,
       ledsToUpdate: updates
     }
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': 'http://192.168.1.69:8080/'
-    });
 
     console.log(this.controllerURL);
     
-    return this.http.post(this.controllerURL, body, {headers});
+    return this.http.post(this.controllerURL, body);
   }
 
   getLEDCount(): number{
-    return 150;
+    return environment.ledCount;
   }
 
 }
