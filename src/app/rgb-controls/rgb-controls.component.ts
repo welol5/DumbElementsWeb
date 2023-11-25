@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RgbConrollerService } from '../services/rgb-conroller.service';
 import { NgModule } from '@angular/core';
 import { ConstantsService } from '../services/constants.service';
-import { BulkLEDUpdate, LEDUpdate } from '../models/ledUpdateRequest';
+import { BulkLEDUpdate, LEDUpdate, LedUpdateRequest } from '../models/ledUpdateRequest';
 
 @Component({
   selector: 'app-rgb-controls',
@@ -23,7 +23,7 @@ export class RgbControlsComponent {
   public currentColor: string;
 
   public actionList: LEDUpdate[] = [];
-  public actionListMaxSize = 20;
+  public actionListMaxSize = 600;
 
   constructor(private rgb: RgbConrollerService) {
     this.leds = Array<string>(rgb.getLEDCount());
@@ -67,7 +67,7 @@ export class RgbControlsComponent {
         'border': '3px solid #00FF00',
         'padding': '0px'
       }
-    } else if(event.shiftKey){
+    } else if (event.shiftKey) {
       if (i > this.selection) {
         this.selectionStart = this.selection;
         this.selectionEnd = i;
@@ -86,12 +86,12 @@ export class RgbControlsComponent {
           'padding': '0px'
         }
       }
-    } else if(event.ctrlKey) {
+    } else if (event.ctrlKey) {
       this.selectionGroup.push(i);
     }
   }
 
-  private resetSelection(): void{
+  private resetSelection(): void {
     for (let k = 0; k < this.rgb.getLEDCount(); k++) {
       this.ledStyles[k] = {
         'color': this.getTextColor(this.leds[k]),
@@ -104,7 +104,7 @@ export class RgbControlsComponent {
 
   updateColors() {
 
-    if(this.selectionStart == -1){
+    if (this.selectionStart == -1) {
       this.selectionStart = this.selection;
       this.selectionEnd = this.selection;
       this.selection = -1;
@@ -125,14 +125,14 @@ export class RgbControlsComponent {
     let g = parseInt(this.currentColor.substring(3, 5), 16);
     let b = parseInt(this.currentColor.substring(5), 16);
     if (this.actionList.length > 0 && this.selectionStart == this.actionList[this.actionList.length - 1].ledStart && this.selectionEnd == this.actionList[this.actionList.length - 1].ledEnd) {
-      this.actionList[this.actionList.length-1].r = r;
-      this.actionList[this.actionList.length-1].g = g;
-      this.actionList[this.actionList.length-1].b = b;
+      this.actionList[this.actionList.length - 1].r = r;
+      this.actionList[this.actionList.length - 1].g = g;
+      this.actionList[this.actionList.length - 1].b = b;
     } else {
       this.actionList.push(new LEDUpdate(this.selectionStart, this.selectionEnd, r, g, b));
     }
 
-    if(this.actionList.length > this.actionListMaxSize){
+    if (this.actionList.length > this.actionListMaxSize) {
       this.actionList.shift();
     }
   }
@@ -143,7 +143,7 @@ export class RgbControlsComponent {
     }
   }
 
-  removeAction(index : number): void {
+  removeAction(index: number): void {
     this.actionList.splice(index, 1);
   }
 
@@ -182,6 +182,46 @@ export class RgbControlsComponent {
     return 0.2126 * R + 0.7152 * G + 0.0722 * B;
   }
 
+  convertHSLToHex(h: number, s:number, v:number): number[] {
+
+    let c = v*s;
+    let x = c* (1- Math.abs(((h/60)%2) -1));
+    let m = v-c;
+
+    let rp,gp,bp;
+    if(h >= 0 && h <60){
+      rp = c;
+      gp = x;
+      bp = 0;
+    } else if(h >= 60 && h < 120){
+      rp = x;
+      gp = c;
+      bp = 0;
+    } else if(h >= 120 && h < 180){
+      rp = 0;
+      gp = c;
+      bp = x;
+    } else if(h >= 180 && h < 240){
+      rp = 0;
+      gp = x;
+      bp = c;
+    } else if(h >= 240 && h < 300){
+      rp = x;
+      gp = 0;
+      bp = c;
+    } else{
+      rp = c;
+      gp = 0;
+      bp = x;
+    }
+
+    let r = (rp+m)*255;
+    let g = (gp+m)*255;
+    let b = (bp+m)*255;
+
+    return [r,g,b];
+  }
+
   getTextColor(color: string): string {
     let whiteContrastRatio = (this.calculateLuminance('#FFFFFF') + 0.05) / (this.calculateLuminance(color) + 0.05);
     let blackContrastRatio = (this.calculateLuminance(color) + 0.05) / (this.calculateLuminance('#000000') + 0.05);
@@ -189,6 +229,42 @@ export class RgbControlsComponent {
       return '#FFFFFF';
     } else {
       return '#000000';
+    }
+  }
+
+  rainbow(offset = 0): void {
+    let status: LEDUpdate[] = [];
+    for (let i = 0; i < this.rgb.getLEDCount(); i++) {
+      let h = (i+offset) % 360;
+      let s = 1;
+      let v = 0.5;
+      
+      let color = this.convertHSLToHex(h,s,v)
+      let ledUpdate: LEDUpdate = new LEDUpdate(i,i,color[0],color[1],color[2]);
+      status.push(ledUpdate);
+    }
+    let update: BulkLEDUpdate = new BulkLEDUpdate(status);
+    this.rgb.setRGB('weird', update).subscribe((data: any) => {
+
+    });
+  }
+
+  public continueAnimation: boolean = false;
+  private animationOffset: number = 0;
+  rainbowAnimation(): void {
+    console.log('animation', this.continueAnimation);
+    if(this.continueAnimation) {
+      this.rainbow(this.animationOffset);
+      this.animationOffset ++;
+      setTimeout(()=> {this.rainbowAnimation()}, 500);
+    }
+  }
+
+  toggleAnimation(): void {
+    if(this.continueAnimation){
+      this.continueAnimation = false;
+    } else {
+      this.continueAnimation = true;
     }
   }
 }

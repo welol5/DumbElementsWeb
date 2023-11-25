@@ -20,6 +20,22 @@ New color selector:
 <button (click)="setColor()">Submit</button>
 <br>
 
+<button (click)="rainbow()">rainbow</button>
+<button (click)="toggleAnimation()">
+    <p *ngIf="continueAnimation">stop</p>
+    <p *ngIf="!continueAnimation">start</p>
+    toggle moving rainbow
+</button>
+<button (click)="rainbowAnimation()">Start animation</button>
+
+<p>
+    Animation testing (WIP). All function values must be between 0 and 1.
+</p>
+r:<input type="text">
+g:<input type="text">
+b:<input type="text">
+<button>Submit animation</button>
+
 <p>
     This is the list of commands that will be sent and has a maximum of 20 commands. This limit is for the microcontroller to not get overwhelmed. They will be executed from 1st to last. 
 </p>
