@@ -9,6 +9,6 @@ export class ConstantsService {
   constructor() { }
 
   public getControllerURL (): string {
-    return 'http://' + environment.controllerIp + ':' + environment.controllerPort;
+    return 'http://' + environment.controllerIp + ':' + environment.controllerPort + '/DumbElementsController';
   }
 }

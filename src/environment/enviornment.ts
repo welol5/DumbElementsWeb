@@ -1,5 +1,5 @@
 export class environment  {
-    static controllerIp = '76.187.74.76'
-    static controllerPort = '8090'
+    static controllerIp = '192.168.1.65'
+    static controllerPort = '8085'
     static ledCount = 450;
 };
