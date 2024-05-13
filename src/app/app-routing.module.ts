@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RgbControlsComponent } from './rgb-controls/rgb-controls.component';
+import { LEDControlsComponent } from './led-controls/led-controls.component';
+import { LedControlsContainerComponent } from './led-controls/led-controls-container/led-controls-container.component';
 
 const routes: Routes = [
-  {path: 'home', component: RgbControlsComponent},
+  {path: 'home', component: LedControlsContainerComponent},
   {path: '**', redirectTo: '/home'}
 ];
 

@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
-import { RgbConrollerService } from '../services/rgb-conroller.service';
+import { LEDConrollerService } from '../services/led-conroller.service';
 import { NgModule } from '@angular/core';
 import { ConstantsService } from '../services/constants.service';
 import { BulkLEDUpdate, LEDUpdate, LedUpdateRequest } from '../models/ledUpdateRequest';
 
 @Component({
-  selector: 'app-rgb-controls',
-  templateUrl: './rgb-controls.component.html',
-  styleUrls: ['./rgb-controls.component.scss']
+  selector: 'app-led-controls',
+  templateUrl: './led-controls.component.html',
+  styleUrls: ['./led-controls.component.scss']
 })
-export class RgbControlsComponent {
+export class LEDControlsComponent {
 
   public name: string = '';
   public nameInvalid: boolean = false;
@@ -25,10 +25,10 @@ export class RgbControlsComponent {
   public actionList: LEDUpdate[] = [];
   public actionListMaxSize = 600;
 
-  constructor(private rgb: RgbConrollerService) {
-    this.leds = Array<string>(rgb.getLEDCount());
-    this.ledStyles = Array<string>(rgb.getLEDCount());
-    for (let i = 0; i < rgb.getLEDCount(); i++) {
+  constructor(private ledService: LEDConrollerService) {
+    this.leds = Array<string>(ledService.getLEDCount());
+    this.ledStyles = Array<string>(ledService.getLEDCount());
+    for (let i = 0; i < ledService.getLEDCount(); i++) {
       this.leds[i] = '#000000';
       this.ledStyles[i] = {
         'color': this.getTextColor('#000000'),
@@ -47,7 +47,7 @@ export class RgbControlsComponent {
 
     let bulkLEDUpdate: BulkLEDUpdate = new BulkLEDUpdate(this.actionList);
 
-    this.rgb.setRGB(this.name, bulkLEDUpdate).subscribe((data: any) => {
+    this.ledService.setRGB(this.name, bulkLEDUpdate).subscribe((data: any) => {
 
     });
   }
@@ -92,7 +92,7 @@ export class RgbControlsComponent {
   }
 
   private resetSelection(): void {
-    for (let k = 0; k < this.rgb.getLEDCount(); k++) {
+    for (let k = 0; k < this.ledService.getLEDCount(); k++) {
       this.ledStyles[k] = {
         'color': this.getTextColor(this.leds[k]),
         'background-color': this.leds[k],
@@ -234,7 +234,7 @@ export class RgbControlsComponent {
 
   rainbow(offset = 0): void {
     let status: LEDUpdate[] = [];
-    for (let i = 0; i < this.rgb.getLEDCount(); i++) {
+    for (let i = 0; i < this.ledService.getLEDCount(); i++) {
       let h = (i+offset) % 360;
       let s = 1;
       let v = 0.5;
@@ -244,7 +244,7 @@ export class RgbControlsComponent {
       status.push(ledUpdate);
     }
     let update: BulkLEDUpdate = new BulkLEDUpdate(status);
-    this.rgb.setRGB('weird', update).subscribe((data: any) => {
+    this.ledService.setRGB('weird', update).subscribe((data: any) => {
 
     });
   }
@@ -267,4 +267,6 @@ export class RgbControlsComponent {
       this.continueAnimation = true;
     }
   }
+
+
 }

@@ -5,13 +5,21 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RgbControlsComponent } from './rgb-controls/rgb-controls.component';
+import { LEDControlsComponent } from './led-controls/led-controls.component';
 import { FormsModule } from '@angular/forms';
+import { AnimationsComponent } from './led-controls/animations/animations.component';
+import { HeaderComponent } from './header/header.component';
+import { NavigationComponent } from './navigation/navigation.component';
+import { LedControlsContainerComponent } from './led-controls/led-controls-container/led-controls-container.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RgbControlsComponent
+    LEDControlsComponent,
+    AnimationsComponent,
+    HeaderComponent,
+    NavigationComponent,
+    LedControlsContainerComponent
   ],
   imports: [
     BrowserModule,

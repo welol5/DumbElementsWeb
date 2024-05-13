@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RgbControlsComponent } from './rgb-controls.component';
+import { LEDControlsComponent } from './led-controls.component';
 
 describe('RgbControlsComponent', () => {
-  let component: RgbControlsComponent;
-  let fixture: ComponentFixture<RgbControlsComponent>;
+  let component: LEDControlsComponent;
+  let fixture: ComponentFixture<LEDControlsComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [RgbControlsComponent]
+      declarations: [LEDControlsComponent]
     });
-    fixture = TestBed.createComponent(RgbControlsComponent);
+    fixture = TestBed.createComponent(LEDControlsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

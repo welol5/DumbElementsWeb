@@ -1,40 +1,26 @@
-Name:
-<input required type="text" [(ngModel)]="name" id="name">
-<div *ngIf="nameInvalid" class="required">
-    Enter a name
-</div>
-<br>
-
-<p>
-    Click box to select an LED, use shift + click on a second to select a group.
-</p>
 <div class="ledContainer">
     <div *ngFor="let led of leds; index as i" (click)="select(i, $event)">
         <div class="led noSelect" [ngStyle]="ledStyles[i]">{{i}}</div>
         <!-- <div *ngIf="!ledsSelected[i]" class="led ledNotSelected">{{i}}</div> -->
     </div>
 </div>
-New color selector:
-<input type="color" [(ngModel)]="currentColor" (change)="updateColors()">
-<br>
-<button (click)="setColor()">Submit</button>
-<br>
+Click box to select an LED, use shift + click on a second to select a group.
 
-<button (click)="rainbow()">rainbow</button>
+<br>
+<div class="input-group">
+    Color:
+    <input type="color" [(ngModel)]="currentColor" (change)="updateColors()">
+</div>
+<br>
+<button class="button-primary" (click)="setColor()">Submit</button>
+
+<!-- <button (click)="rainbow()">rainbow</button>
 <button (click)="toggleAnimation()">
     <p *ngIf="continueAnimation">stop</p>
     <p *ngIf="!continueAnimation">start</p>
     toggle moving rainbow
 </button>
-<button (click)="rainbowAnimation()">Start animation</button>
-
-<p>
-    Animation testing (WIP). All function values must be between 0 and 1.
-</p>
-r:<input type="text">
-g:<input type="text">
-b:<input type="text">
-<button>Submit animation</button>
+<button (click)="rainbowAnimation()">Start animation</button> -->
 
 <p>
     This is the list of commands that will be sent and has a maximum of 20 commands. This limit is for the microcontroller to not get overwhelmed. They will be executed from 1st to last. 

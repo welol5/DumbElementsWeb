@@ -1,1 +1,57 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #585858;
+    color: #bebebe;
+}
+
+input {
+    background-color: #414141;
+    // background-color: white;
+    border-radius: .25rem ;
+    border-color: #444444;
+    border-style: solid;
+    height:2rem;
+    color:#bebebe;
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: none;
+}
+
+button {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    padding-top:0.5rem;
+    padding-bottom:0.5rem;
+    padding-left:1rem;
+    padding-right:1rem;
+}
+
+.button-primary {
+    background-color: #7f14b1;
+    border-radius: .25rem;
+    border-width: 1px;
+    border-color: #000000;
+    border-style: solid;
+}
+
+.button-primary:active {
+    background-color: #d782ff;
+}
+
+*:focus {
+    border-color: #000000;
+}
+
+h2 {
+    font-size: 1.75rem;
+    padding-bottom: 1rem;
+    margin: 0;
+}
+
+.input-group{
+    font-size: 1.25;
+}

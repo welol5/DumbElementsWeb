@@ -31,3 +31,15 @@ export class LEDUpdate {
         this.b = b;
     }
 }
+
+export class LEDAnimation {
+    public r = '';
+    public g = '';
+    public b = '';
+
+    constructor(r: string, g: string, b: string){
+        this.r = r;
+        this.g = g;
+        this.b = b;
+    }
+}

@@ -1,0 +1,16 @@
+<h2 class="component-title">
+    LED controls
+</h2>
+
+<nav class="sub-nav">
+    <a class="tab" routerLink="" (click)="selectTab(0)">Manuel</a>
+    <a class="tab" routerLink="" (click)="selectTab(1)">Animation</a>
+</nav>
+
+<div *ngIf="selectedTab == 0">
+    <app-led-controls></app-led-controls>
+</div>
+
+<div *ngIf="selectedTab == 1">
+    <app-animations></app-animations>
+</div>

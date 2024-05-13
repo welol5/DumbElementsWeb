@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RgbConrollerService } from './rgb-conroller.service';
+import { LEDConrollerService } from './led-conroller.service';
 
 describe('RgbConrollerService', () => {
-  let service: RgbConrollerService;
+  let service: LEDConrollerService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(RgbConrollerService);
+    service = TestBed.inject(LEDConrollerService);
   });
 
   it('should be created', () => {

@@ -1,13 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConstantsService } from './constants.service';
-import { BulkLEDUpdate } from '../models/ledUpdateRequest';
+import { BulkLEDUpdate, LEDAnimation } from '../models/ledUpdateRequest';
 import { environment } from 'src/environment/enviornment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RgbConrollerService {
+export class LEDConrollerService {
 
   private controllerURL;
 
@@ -16,20 +16,20 @@ export class RgbConrollerService {
   }
 
   setRGB(name: String, updates: BulkLEDUpdate): any{
-    console.log('send update');
-
     let body = {
       name: name,
       ledsToUpdate: updates
     }
-
-    console.log(this.controllerURL);
-    
     return this.http.post(this.controllerURL, body);
   }
 
   getLEDCount(): number{
     return environment.ledCount;
+  }
+
+  setLEDAnimation(name: string, animation: LEDAnimation){
+    let body = animation;
+    return this.http.post(this.controllerURL + '/animation', body);
   }
 
 }
